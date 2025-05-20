@@ -59,9 +59,33 @@ vulkanheaders = subproject('vulkanheaders').get_variable('vulkanheaders_dep')
 glfw = dependency('glfw3', version: ['>=3.4.0'], fallback: ['glfw', 'glfw_dep'])
 subprocess = dependency('subprocess', version: ['>=0.4.0'], fallback: ['subprocess', 'subprocess_dep'])
 glm = dependency('glm', fallback : ['glm', 'glm_dep'], version: ['>=0.9.9.8'])
+
+
+cmake = import('cmake')
+tinyobj_opts = cmake.subproject_options()
+tinyobj_opts.set_install(false)  # <- disables all install() calls in CMake
+tinyobj_proj = cmake.subproject('tinyobjloader', options: tinyobj_opts)
 tol = dependency('tinyobjloader', fallback : ['tinyobjloader', 'tinyobjloader_dep'])
+
+
+tinygltf_opts = cmake.subproject_options()
+tinygltf_opts.set_install(false)  # disables all install() calls
+tinygltf_opts.add_cmake_defines({
+  'TINYGLTF_INSTALL': 'OFF',
+  'TINYGLTF_HEADER_ONLY': 'OFF',  # or ON if you want to use header-only
+  'TINYGLTF_BUILD_LOADER_EXAMPLE': 'OFF',
+  'TINYGLTF_BUILD_GL_EXAMPLES': 'OFF',
+  'TINYGLTF_BUILD_VALIDATOR_EXAMPLE': 'OFF',
+  'TINYGLTF_BUILD_BUILDER_EXAMPLE': 'OFF',
+  'TINYGLTF_INSTALL_VENDOR': 'OFF',
+})
+
+tinygltf_proj = cmake.subproject('tinygltf', options: tinygltf_opts)
 tgltf = dependency('tinygltf', required: get_option('tinygltf'), fallback: ['tinygltf', 'tinygltf_dep'])
+
+
 imgui = dependency('imgui', version: ['>=1.90.9'], fallback: ['imgui', 'imgui_dep'], static: true)
+
 nlohmann_json = dependency('nlohmann_json', version: ['>=3.11.3'], fallback: ['nlohmann_json', 'nlohmann_json_dep'])
 vma = dependency('VulkanMemoryAllocator', version: ['>=3.1.0'], fallback: ['VulkanMemoryAllocator', 'VulkanMemoryAllocator_dep'])
 stb = dependency('stb', fallback: ['stb', 'stb_dep'], default_options : ['stb_libraries=[\'stb_image\', \'stb_image_write\']'])
@@ -169,4 +193,4 @@ merian_dep = declare_dependency(
     ]
 )
 
-install_subdir('include', install_dir: get_option('includedir'), strip_directory: true)
+# install_subdir('include', install_dir: get_option('includedir'), strip_directory: true)

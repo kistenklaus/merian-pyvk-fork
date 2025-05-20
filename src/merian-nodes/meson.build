@@ -20,5 +20,5 @@ merian_nodes_lib = static_library(
     ],
     include_directories: inc_dirs,
     link_with: merian_lib,
-    install : true
+    install : false
 )
