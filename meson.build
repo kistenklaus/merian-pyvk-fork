@@ -64,6 +64,9 @@ glm = dependency('glm', fallback : ['glm', 'glm_dep'], version: ['>=0.9.9.8'])
 cmake = import('cmake')
 tinyobj_opts = cmake.subproject_options()
 tinyobj_opts.set_install(false)  # <- disables all install() calls in CMake
+tinyobj_opts.add_cmake_defines({
+  'CMAKE_POSITION_INDEPENDENT_CODE': 'ON',  # works globally
+})
 tinyobj_proj = cmake.subproject('tinyobjloader', options: tinyobj_opts)
 tol = dependency('tinyobjloader', fallback : ['tinyobjloader', 'tinyobjloader_dep'])
 
@@ -72,12 +75,6 @@ tinygltf_opts = cmake.subproject_options()
 tinygltf_opts.set_install(false)  # disables all install() calls
 tinygltf_opts.add_cmake_defines({
   'TINYGLTF_INSTALL': 'OFF',
-  'TINYGLTF_HEADER_ONLY': 'OFF',  # or ON if you want to use header-only
-  'TINYGLTF_BUILD_LOADER_EXAMPLE': 'OFF',
-  'TINYGLTF_BUILD_GL_EXAMPLES': 'OFF',
-  'TINYGLTF_BUILD_VALIDATOR_EXAMPLE': 'OFF',
-  'TINYGLTF_BUILD_BUILDER_EXAMPLE': 'OFF',
-  'TINYGLTF_INSTALL_VENDOR': 'OFF',
 })
 
 tinygltf_proj = cmake.subproject('tinygltf', options: tinygltf_opts)
