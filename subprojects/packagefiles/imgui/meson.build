@@ -113,7 +113,7 @@ imgui = library(
   gnu_symbol_visibility: 'hidden',
   dependencies: dependencies,
   include_directories: include_dirs,
-  install: true,
+  install: false,
 )
 
 if host_machine.system() == 'windows'

@@ -29,7 +29,7 @@ stb = static_library(
   implementations,
   cpp_args: args,
   include_directories: include_dirs,
-  install: true,
+  install: false,
 )
 
 stb_dep = declare_dependency(

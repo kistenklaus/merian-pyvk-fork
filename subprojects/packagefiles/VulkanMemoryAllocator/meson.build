@@ -17,7 +17,7 @@ vma = static_library(
   dependencies: [vulkan],
   cpp_args: ['-DVMA_IMPLEMENTATION'],
   include_directories: include_dirs,
-  install: true,
+  install: false,
 )
 
 VulkanMemoryAllocator_dep = declare_dependency(

@@ -12,7 +12,7 @@ tol = static_library(
   'tol',
   ['tiny_obj_loader.cc'],
   include_directories: include_dirs,
-  install: true,
+  install: false,
 )
 
 tinyobjloader_dep = declare_dependency(
